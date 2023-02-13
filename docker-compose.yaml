@@ -12,12 +12,3 @@ services:
       - '3306:3306'
     expose:
       - '3306'
-
-  postgres:
-    image: postgres:13.3
-    environment:
-      POSTGRES_DB: "habrdb"
-      POSTGRES_USER: "habrpguser"
-      POSTGRES_PASSWORD: "pgpwd4habr"
-    ports:
-      - "5432:5432"
