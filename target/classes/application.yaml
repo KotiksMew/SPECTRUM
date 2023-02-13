@@ -1,0 +1,37 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/Spectrum
+    username: kotiks
+    password: mew
+    driverClassName: com.mysql.cj.jdbc.Driver
+
+  liquibase:
+    change-log: 'classpath:db/migrations/changeLog.xml'
+
+  main:
+    allow-circular-references: true
+
+  application:
+    name: Spectrum
+
+  jpa:
+    generate-ddl: false
+    hibernate:
+      #validate: validate the schema, makes no changes to the database.
+      #update: update the schema.
+      #create: creates the schema, destroying previous data.
+      #create-drop: drop the schema at the end of the session
+      #none: is all other cases.
+      ddl-auto: validate
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: db
+        format_sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+

@@ -1,0 +1,117 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="GrandMeow" id="Create-table-user">
+        <preConditions>
+            <not>
+                <tableExists tableName="user"/>
+            </not>
+        </preConditions>
+        <createTable tableName="user">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="nickname" type="VARCHAR(16)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="email" type="VARCHAR(16)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="VARCHAR(16)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="role" type="VARCHAR(16)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+   <changeSet author="GrandMeow" id="Create-table-deck">
+        <preConditions>
+            <not>
+                <tableExists tableName="deck"/>
+            </not>
+        </preConditions>
+        <createTable tableName="deck">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_deck_user"
+                             references="user(id)"/>
+            </column>
+            <column name="title" type="VARCHAR(16)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="GrandMeow" id="Create-table-fraction">
+        <preConditions>
+            <not>
+                <tableExists tableName="fraction"/>
+            </not>
+        </preConditions>
+        <createTable tableName="fraction">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(36)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="GrandMeow" id="Create-table-unit">
+        <preConditions>
+            <not>
+                <tableExists tableName="unit"/>
+            </not>
+        </preConditions>
+        <createTable tableName="unit">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(16)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="fraction_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_unit_fraction"
+                             references="fraction(id)"/>
+            </column>
+            <column name="rating" type="BIGINT">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="img" type="MEDIUMBLOB">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="info" type="VARCHAR(1600)">
+                <constraints nullable="true" unique="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="GrandMeow" id="Create-table-deck_unit">
+        <preConditions>
+            <not>
+                <tableExists tableName="deck-unit"/>
+            </not>
+        </preConditions>
+        <createTable tableName="deck-unit">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="deck_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_deck_unit_deck"
+                             references="deck(id)"/>
+            </column>
+            <column name="unit_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="FK_deck_unit_unit"
+                             references="unit(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
